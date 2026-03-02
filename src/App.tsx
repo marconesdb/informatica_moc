@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import {
   Monitor, Layout, Smartphone, Mail, Github, Linkedin,
-  ChevronRight, ChevronLeft, Terminal, Server, Wrench, CheckCircle2, Menu, X
+  ChevronRight, ChevronLeft, Terminal, Server, Wrench, CheckCircle2, Menu, X, Phone
 } from "lucide-react";
 import informatica from "./assets/informatica.png";
 
@@ -403,11 +403,32 @@ const Contact = () => (
         <h3 style={{ fontSize: "2.25rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Entre em Contato</h3>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 48 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 24 }}>
         {[
           { icon: <Mail size={22} />, label: "E-mail", value: "marconebritt@gmail.com", href: "mailto:marconebritt@gmail.com" },
           { icon: <Github size={22} />, label: "GitHub", value: "https://github.com/marconesdb", href: "https://github.com" },
           { icon: <Linkedin size={22} />, label: "LinkedIn", value: "https://www.linkedin.com/in/marconesb/", href: "https://linkedin.com" },
+        ].map(({ icon, label, value, href }) => (
+          <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+            style={{ display: "flex", alignItems: "center", gap: 16, padding: 24, borderRadius: 16, border: "1px solid #f4f4f5", background: "#fafafa", textDecoration: "none", color: "inherit", transition: "all 0.3s" }}
+            onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.08)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "none"; }}>
+            <div style={{ width: 48, height: 48, background: "#18181b", color: "#fff", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              {icon}
+            </div>
+            <div>
+              <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#a1a1aa", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>{label}</p>
+              <p style={{ fontSize: "0.95rem", fontWeight: 500, color: "#18181b" }}>{value}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* Telefones lado a lado */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 48 }}>
+        {[
+          { icon: <Phone size={22} />, label: "Telefone 1", value: "(38) 99218-2727", href: "tel:+5538992182727" },
+          { icon: <Phone size={22} />, label: "Telefone 2", value: "(38) 99913-8667", href: "tel:+5538999138667" },
         ].map(({ icon, label, value, href }) => (
           <a key={label} href={href} target="_blank" rel="noopener noreferrer"
             style={{ display: "flex", alignItems: "center", gap: 16, padding: 24, borderRadius: 16, border: "1px solid #f4f4f5", background: "#fafafa", textDecoration: "none", color: "inherit", transition: "all 0.3s" }}
@@ -436,15 +457,18 @@ const Contact = () => (
 
 
 // ── Footer ─────────────────────────────────────────────────────────────────
+
 const Footer = () => (
-  <footer style={{ padding: "3rem 1.5rem", borderTop: "1px solid #f4f4f5", background: "#fff", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24, maxWidth: 1280, margin: "0 auto" }}>
-    <div style={{ fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
-      <div style={{ background: "#18181b", color: "#fff", padding: 4, borderRadius: 6 }}><Terminal size={16} /></div>
-      MARCONE <span style={{ color: "#71717a", fontWeight: 400, marginLeft: 4 }}>S.</span> BRITO
-    </div>
-    <p style={{ fontSize: "0.875rem", color: "#71717a" }}>© {new Date().getFullYear()} Marcone S. de Brito. Todos os direitos reservados.</p>
-    <div style={{ display: "flex", gap: 24 }}>
-      {["Privacidade", "Termos"].map(l => <a key={l} href="#" style={{ fontSize: "0.875rem", fontWeight: 500, color: "#52525b", textDecoration: "none" }}>{l}</a>)}
+  <footer style={{ padding: "3rem 1.5rem", borderTop: "1px solid #a1a1aa", background: "#a0a0a3" }}>
+    <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+      <div style={{ fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ background: "#18181b", color: "#a1a1aa", padding: 4, borderRadius: 6 }}><Terminal size={16} /></div>
+        MARCONE <span style={{ color: "#18181b", fontWeight: 400, marginLeft: 4 }}>S.</span> BRITO
+      </div>
+      <p style={{ fontSize: "0.875rem", color: "#71717a" }}>© {new Date().getFullYear()} Marcone S. de Brito. Todos os direitos reservados.</p>
+      <div style={{ display: "flex", gap: 24 }}>
+        {["Privacidade", "Termos"].map(l => <a key={l} href="#" style={{ fontSize: "0.875rem", fontWeight: 500, color: "#52525b", textDecoration: "none" }}>{l}</a>)}
+      </div>
     </div>
   </footer>
 );
