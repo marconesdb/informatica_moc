@@ -1,259 +1,177 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import { useState, useEffect } from "react";
+import {
+  Monitor, Layout, Smartphone, Mail, Github, Linkedin,
+  ChevronRight, Terminal, Server, Wrench, CheckCircle2, Menu, X
+} from "lucide-react";
+import informatica from "./assets/informatica.png";
 
-import React, { useState, useEffect } from 'react';
-import { 
-  Monitor, 
-  Code2, 
-  Cpu, 
-  Layout, 
-  Database, 
-  Smartphone, 
-  Mail, 
-  Github, 
-  Linkedin, 
-  ExternalLink, 
-  ChevronRight,
-  Terminal,
-  Server,
-  Wrench,
-  CheckCircle2,
-  Menu,
-  X
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
+// ── Nav ────────────────────────────────────────────────────────────────────
 const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-  { name: 'Início', href: '#home' },
-  { name: 'Sobre', href: 'https://layout-novo-portfolio.vercel.app/' },
-  { name: 'Serviços', href: '#services' },
-  { name: 'Habilidades', href: '#skills' },
-  { name: 'Contato', href: '#contact' },
-];
-
+    { name: "Início", href: "#home" },
+    { name: "Sobre", href: "https://layout-novo-portfolio.vercel.app/" },
+    { name: "Serviços", href: "#services" },
+    { name: "Habilidades", href: "#skills" },
+    { name: "Contato", href: "#contact" },
+  ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass py-4 shadow-sm' : 'bg-transparent py-6'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-bold tracking-tighter flex items-center gap-2"
-        >
-          <div className="bg-zinc-900 text-white p-1 rounded">
+    <nav
+      style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+        transition: "all 0.3s",
+        background: isScrolled ? "rgba(255,255,255,0.85)" : "transparent",
+        backdropFilter: isScrolled ? "blur(12px)" : "none",
+        boxShadow: isScrolled ? "0 1px 8px rgba(0,0,0,0.06)" : "none",
+        padding: isScrolled ? "1rem 0" : "1.5rem 0",
+      }}
+    >
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ fontSize: "1.1rem", fontWeight: 700, letterSpacing: "-0.05em", display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ background: "#18181b", color: "#fff", padding: 4, borderRadius: 6 }}>
             <Terminal size={20} />
           </div>
-          <span>MARCONE <span className="text-zinc-500 font-normal">S.</span> BRITO</span>
-        </motion.div>
+          <span>MARCONE <span style={{ color: "#71717a", fontWeight: 400 }}>S.</span> BRITO</span>
+        </div>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href}
-              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
-            >
-              {link.name}
-            </a>
+        {/* Desktop */}
+        <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+          {navLinks.map(l => (
+            <a key={l.name} href={l.href} style={{ fontSize: "0.875rem", fontWeight: 500, color: "#52525b", textDecoration: "none" }}>{l.name}</a>
           ))}
-          <a 
-            href="#contact" 
-            className="bg-zinc-900 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-zinc-800 transition-all"
-          >
+          <a href="#contact" style={{ background: "#18181b", color: "#fff", padding: "0.5rem 1.25rem", borderRadius: 9999, fontSize: "0.875rem", fontWeight: 500, textDecoration: "none" }}>
             Contratar
           </a>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-zinc-900"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
+        {/* Mobile toggle */}
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} style={{ background: "none", border: "none", cursor: "pointer" }}>
           {isMobileMenuOpen ? <X /> : <Menu />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-zinc-100 overflow-hidden"
-          >
-            <div className="flex flex-col p-6 gap-4">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href}
-                  className="text-lg font-medium text-zinc-600"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div style={{ background: "#fff", borderBottom: "1px solid #f4f4f5", padding: "1.5rem" }}>
+          {navLinks.map(l => (
+            <a key={l.name} href={l.href} onClick={() => setIsMobileMenuOpen(false)}
+              style={{ display: "block", fontSize: "1.1rem", fontWeight: 500, color: "#52525b", marginBottom: 16, textDecoration: "none" }}>
+              {l.name}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };
 
+// ── Hero ───────────────────────────────────────────────────────────────────
 const Hero = () => {
+  // ✅ CORREÇÃO 1: Import do arquivo local removido.
+  // Cole aqui a URL pública da sua imagem (GitHub raw, Cloudinary, etc.)
+  // Exemplo: "https://raw.githubusercontent.com/seu-usuario/repo/main/src/assets/informatica.png"
+  const PHOTO_URL = "https://placehold.co/600x600/18181b/ffffff?text=Sua+Foto";
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-zinc-100/50 skew-x-12 transform origin-top-right" />
-      <div className="absolute top-1/4 left-1/4 -z-10 w-64 h-64 bg-zinc-200/30 rounded-full blur-3xl" />
-      
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-600 mb-6">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+    <section id="home" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: 80, position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", top: 0, right: 0, zIndex: -1, width: "50%", height: "100%", background: "rgba(244,244,245,0.5)", transform: "skewX(12deg)", transformOrigin: "top right" }} />
+      <div style={{ position: "absolute", top: "25%", left: "25%", zIndex: -1, width: 256, height: 256, background: "rgba(228,228,231,0.3)", borderRadius: "50%", filter: "blur(48px)" }} />
+
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center", width: "100%" }}>
+        <div>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "0.25rem 0.75rem", borderRadius: 9999, background: "#f4f4f5", border: "1px solid #e4e4e7", fontSize: "0.75rem", fontWeight: 600, color: "#52525b", marginBottom: 24 }}>
+            <span style={{ position: "relative", display: "flex", width: 8, height: 8 }}>
+              <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#34d399", opacity: 0.75, animation: "ping 1s infinite" }} />
+              <span style={{ position: "relative", display: "inline-flex", borderRadius: "50%", width: 8, height: 8, background: "#10b981" }} />
             </span>
             DISPONÍVEL PARA PROJETOS
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
-            Informática <span className="text-zinc-400">Montes Claros</span>
+
+          <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.04em", marginBottom: 24 }}>
+            Informática <span style={{ color: "#a1a1aa" }}>Montes Claros</span>
           </h1>
-          <p className="text-lg text-zinc-600 mb-8 max-w-lg leading-relaxed">
-            Olá, eu sou <strong>Marcone S. de Brito</strong>. Especialista em criar interfaces modernas, 
+
+          <p style={{ fontSize: "1.125rem", color: "#52525b", marginBottom: 32, maxWidth: 480, lineHeight: 1.7 }}>
+            Olá, eu sou <strong>Marcone S. de Brito</strong>. Especialista em criar interfaces modernas,
             sistemas eficientes e soluções técnicas completas para o seu negócio.
           </p>
-          <div className="flex flex-wrap gap-4">
-           <a 
-            href="https://wa.me/5538992182727?text=Olá,%20gostaria%20de%20conversar!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-zinc-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-zinc-800 transition-all flex items-center gap-2 group"
-          >
-            Vamos Conversar
-            <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </a>
 
-            <a 
-              href="#services" 
-              className="bg-white text-zinc-900 border border-zinc-200 px-8 py-4 rounded-xl font-semibold hover:bg-zinc-50 transition-all"
-            >
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
+            <a href="https://wa.me/5538992182727?text=Olá,%20gostaria%20de%20conversar!" target="_blank" rel="noopener noreferrer"
+              style={{ background: "#18181b", color: "#fff", padding: "1rem 2rem", borderRadius: 12, fontWeight: 600, textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
+              Vamos Conversar <ChevronRight size={18} />
+            </a>
+            <a href="#services"
+              style={{ background: "#fff", color: "#18181b", border: "1px solid #e4e4e7", padding: "1rem 2rem", borderRadius: 12, fontWeight: 600, textDecoration: "none" }}>
               Ver Serviços
             </a>
           </div>
-          
-          <div className="mt-12 flex items-center gap-6 grayscale opacity-50">
-            <div className="flex items-center gap-2">
-              <Monitor size={20} />
-              <span className="text-sm font-medium">Web</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Smartphone size={20} />
-              <span className="text-sm font-medium">Mobile</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Server size={20} />
-              <span className="text-sm font-medium">Sistemas</span>
-            </div>
-          </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative hidden lg:block"
-        >
-          <div className="relative z-10 bg-white p-4 rounded-3xl shadow-2xl border border-zinc-100">
-            <div className="bg-zinc-900 rounded-2xl overflow-hidden aspect-square flex items-center justify-center relative">
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
-              <Code2 size={120} className="text-white/20 absolute" />
-              <div className="text-zinc-400 font-mono text-sm p-8 z-10">
-                <p className="text-emerald-400">const developer = &#123;</p>
-                <p className="pl-4">name: "Marcone Silva",</p>
-                <p className="pl-4">role: "Full-Stack Specialist",</p>
-                <p className="pl-4">skills: ["React", "TS", "Node"],</p>
-                <p className="pl-4">passion: "Clean Code",</p>
-                <p className="text-emerald-400">&#125;;</p>
-                <p className="mt-4 text-zinc-500">// Building the future...</p>
+          <div style={{ marginTop: 48, display: "flex", alignItems: "center", gap: 24, opacity: 0.5, filter: "grayscale(1)" }}>
+            {[{ Icon: Monitor, label: "Web" }, { Icon: Smartphone, label: "Mobile" }, { Icon: Server, label: "Sistemas" }].map(({ Icon, label }) => (
+              <div key={label} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Icon size={20} /><span style={{ fontSize: "0.875rem", fontWeight: 500 }}>{label}</span>
               </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ position: "relative" }}>
+          <div style={{ position: "relative", zIndex: 10, background: "#fff", padding: 16, borderRadius: 24, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)", border: "1px solid #f4f4f5" }}>
+            <div style={{ background: "#18181b", borderRadius: 16, overflow: "hidden", aspectRatio: "1/1", position: "relative" }}>
+              <div style={{ position: "absolute", inset: 0, opacity: 0.1, backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "20px 20px", zIndex: 1 }} />
+              {/* ✅ Usando PHOTO_URL — troque pelo link real da sua imagem */}
+              <img
+                src={informatica}
+                alt="Informática Montes Claros"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", position: "relative", zIndex: 2 }}
+              />
             </div>
           </div>
-          {/* Decorative cards */}
-          <div className="absolute -top-6 -right-6 w-32 h-32 bg-zinc-900 rounded-2xl -z-10 rotate-12" />
-          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-zinc-200 rounded-2xl -z-10 -rotate-12" />
-        </motion.div>
+          <div style={{ position: "absolute", top: -24, right: -24, width: 128, height: 128, background: "#18181b", borderRadius: 16, zIndex: -1, transform: "rotate(12deg)" }} />
+          <div style={{ position: "absolute", bottom: -24, left: -24, width: 128, height: 128, background: "#e4e4e7", borderRadius: 16, zIndex: -1, transform: "rotate(-12deg)" }} />
+        </div>
       </div>
+
+      <style>{`@keyframes ping { 0%,100%{transform:scale(1);opacity:.75} 50%{transform:scale(2);opacity:0} }`}</style>
     </section>
   );
 };
 
+// ── Services ───────────────────────────────────────────────────────────────
 const Services = () => {
   const services = [
-    {
-      icon: <Layout className="text-zinc-900" />,
-      title: "Desenvolvimento Front-end",
-      description: "Criação de interfaces responsivas, rápidas e acessíveis utilizando React.js e Tailwind CSS."
-    },
-    {/*{
-      icon: <Database className="text-zinc-900" />,
-      title: "Análise de Sistemas",
-      description: "Levantamento de requisitos, modelagem de dados e arquitetura de soluções escaláveis."
-    },*/},
-
-    {
-      icon: <Wrench className="text-zinc-900" />,
-      title: "Suporte Técnico TI",
-      description: "Manutenção de hardware, configuração e formatação de computadores."
-    },
-    {/*{
-      icon: <Smartphone className="text-zinc-900" />,
-      title: "Aplicações Mobile",
-      description: "Desenvolvimento de apps modernos que funcionam perfeitamente em qualquer dispositivo."
-    }*/},
+    { icon: <Layout />, title: "Desenvolvimento Front-end", description: "Criação de interfaces responsivas, rápidas e acessíveis utilizando React.js e Tailwind CSS." },
+    { icon: <Wrench />, title: "Suporte Técnico TI", description: "Manutenção de hardware, configuração e formatação de computadores." },
   ];
 
   return (
-    <section id="services" className="section-padding bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <h2 className="text-sm font-bold text-zinc-400 uppercase tracking-widest mb-2">O que eu faço</h2>
-          <h3 className="text-4xl font-bold tracking-tight">Serviços Especializados</h3>
+    <section id="services" style={{ padding: "6rem 1.5rem", background: "#fff" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <div style={{ marginBottom: 64 }}>
+          <h2 style={{ fontSize: "0.75rem", fontWeight: 700, color: "#a1a1aa", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>O que eu faço</h2>
+          <h3 style={{ fontSize: "2.25rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Serviços Especializados</h3>
         </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <motion.div 
-              key={index}
-              whileHover={{ y: -5 }}
-              className="p-8 rounded-2xl border border-zinc-100 bg-zinc-50 hover:bg-white hover:shadow-xl hover:shadow-zinc-200/50 transition-all"
-            >
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-6">
-                {service.icon}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 32 }}>
+          {services.map((s, i) => (
+            <div key={i} style={{ padding: 32, borderRadius: 16, border: "1px solid #f4f4f5", background: "#fafafa", transition: "all 0.3s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.08)"; e.currentTarget.style.transform = "translateY(-5px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#fafafa"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "none"; }}>
+              <div style={{ width: 48, height: 48, background: "#fff", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", marginBottom: 24 }}>
+                {s.icon}
               </div>
-              <h4 className="text-xl font-bold mb-4">{service.title}</h4>
-              <p className="text-zinc-600 leading-relaxed">
-                {service.description}
-              </p>
-            </motion.div>
+              <h4 style={{ fontSize: "1.125rem", fontWeight: 700, marginBottom: 12 }}>{s.title}</h4>
+              <p style={{ color: "#52525b", lineHeight: 1.7 }}>{s.description}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -261,166 +179,106 @@ const Services = () => {
   );
 };
 
+// ── Skills ─────────────────────────────────────────────────────────────────
 const Skills = () => {
-  const skillCategories = [
-    {
-      title: "Desenvolvimento",
-      skills: ["React.js", "TypeScript", "JavaScript", "Next.js", "Tailwind CSS", "Node.js", "Git/GitHub"]
-    },
-   
-    {
-      title: "Técnico em Informática",
-      skills: ["Hardware", "Wi-fi","Windows", "Segurança", "Virtualização", "IA", "Aulas Particulares"]
-    }
+  const cats = [
+    { title: "Desenvolvimento", skills: ["React.js", "TypeScript", "JavaScript", "Next.js", "Tailwind CSS", "Node.js", "Git/GitHub"] },
+    { title: "Técnico em Informática", skills: ["Hardware", "Wi-fi", "Windows", "Segurança", "Virtualização", "IA", "Aulas Particulares"] },
   ];
 
   return (
-    <section id="skills" className="section-padding bg-zinc-900 text-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-widest mb-2">Expertise</h2>
-            <h3 className="text-4xl font-bold tracking-tight mb-6">Habilidades Técnicas</h3>
-            <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-              Ao longo da minha carreira como Analista e Desenvolvedor, consolidei um conjunto de habilidades 
-              que me permite atuar desde a infraestrutura até a interface final do usuário.
-            </p>
-            <div className="space-y-4">
-              {['Foco em Performance', 'Código Limpo e Escalável', 'Soluções Orientadas a Resultados'].map((item) => (
-                <div key={item} className="flex items-center gap-3">
-                  <CheckCircle2 className="text-emerald-500" size={20} />
-                  <span className="font-medium">{item}</span>
-                </div>
-              ))}
+    <section id="skills" style={{ padding: "6rem 1.5rem", background: "#18181b", color: "#fff" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div>
+          <h2 style={{ fontSize: "0.75rem", fontWeight: 700, color: "#52525b", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>Expertise</h2>
+          <h3 style={{ fontSize: "2.25rem", fontWeight: 700, letterSpacing: "-0.03em", marginBottom: 24 }}>Habilidades Técnicas</h3>
+          <p style={{ color: "#a1a1aa", fontSize: "1.125rem", lineHeight: 1.7, marginBottom: 32 }}>
+            Ao longo da minha carreira como Analista e Desenvolvedor, consolidei um conjunto de habilidades
+            que me permite atuar desde a infraestrutura até a interface final do usuário.
+          </p>
+          {["Foco em Performance", "Código Limpo e Escalável", "Soluções Orientadas a Resultados"].map(item => (
+            <div key={item} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+              <CheckCircle2 color="#10b981" size={20} />
+              <span style={{ fontWeight: 500 }}>{item}</span>
             </div>
-          </div>
-          
-          <div className="grid gap-6">
-            {skillCategories.map((cat, idx) => (
-              <div key={idx} className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
-                <h4 className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-4">{cat.title}</h4>
-                <div className="flex flex-wrap gap-2">
-                  {cat.skills.map((skill) => (
-                    <span key={skill} className="px-3 py-1 bg-zinc-700/50 rounded-lg text-sm font-medium border border-zinc-600/30">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          {cats.map((c, i) => (
+            <div key={i} style={{ background: "rgba(39,39,42,0.5)", padding: 24, borderRadius: 16, border: "1px solid rgba(63,63,70,0.5)" }}>
+              <h4 style={{ fontSize: "0.75rem", fontWeight: 700, color: "#71717a", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>{c.title}</h4>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {c.skills.map(s => (
+                  <span key={s} style={{ padding: "0.25rem 0.75rem", background: "rgba(63,63,70,0.5)", borderRadius: 8, fontSize: "0.875rem", fontWeight: 500, border: "1px solid rgba(82,82,91,0.3)" }}>{s}</span>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
 
-const Contact = () => {
-  return (
-    <section id="contact" className="section-padding bg-zinc-50">
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-zinc-900 rounded-[2.5rem] overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 blur-3xl rounded-full -mr-32 -mt-32" />
-          
-          <div className="grid lg:grid-cols-2">
-            <div className="p-12 lg:p-20">
-              <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
-                Vamos iniciar um <span className="text-emerald-400">projeto?</span>
-              </h2>
-              <p className="text-zinc-400 text-lg mb-12 leading-relaxed">
-                Estou sempre aberto a novos desafios e parcerias. Se você precisa de um sistema robusto, 
-                um site moderno ou consultoria técnica, entre em contato.
-              </p>
-              
-              <div className="space-y-6">
-                <a href="mailto:marconebritt@gmail.com" className="flex items-center gap-4 text-white hover:text-emerald-400 transition-colors group">
-                  <div className="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
-                    <Mail size={20} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">E-mail</p>
-                    <p className="text-lg font-medium">marconebritt@gmail.com</p>
-                  </div>
-                </a>
-                
-                <div className="flex gap-4 pt-6">
-                  <a href="#" className="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white hover:bg-zinc-700 transition-all">
-                    <Linkedin size={20} />
-                  </a>
-                  <a href="#" className="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-white hover:bg-zinc-700 transition-all">
-                    <Github size={20} />
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-zinc-800/50 p-12 lg:p-20 border-l border-zinc-700/50">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Nome</label>
-                    <input 
-                      type="text" 
-                      placeholder="Seu nome"
-                      className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">E-mail</label>
-                    <input 
-                      type="email" 
-                      placeholder="seu@email.com"
-                      className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Mensagem</label>
-                  <textarea 
-                    rows={4}
-                    placeholder="Como posso ajudar?"
-                    className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors resize-none"
-                  ></textarea>
-                </div>
-                <button className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-900 font-bold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20">
-                  Enviar Mensagem
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
+// ── Contact ────────────────────────────────────────────────────────────────
+// ✅ CORREÇÃO 2: Componente Contact estava ausente — causava crash e tela branca
+const Contact = () => (
+  <section id="contact" style={{ padding: "6rem 1.5rem", background: "#fff" }}>
+    <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+      <div style={{ marginBottom: 48 }}>
+        <h2 style={{ fontSize: "0.75rem", fontWeight: 700, color: "#a1a1aa", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>Fale comigo</h2>
+        <h3 style={{ fontSize: "2.25rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Entre em Contato</h3>
       </div>
-    </section>
-  );
-};
 
-const Footer = () => {
-  return (
-    <footer className="py-12 px-6 border-t border-zinc-100 bg-white">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="text-xl font-bold tracking-tighter flex items-center gap-2">
-          <div className="bg-zinc-900 text-white p-1 rounded">
-            <Terminal size={16} />
-          </div>
-          <span>MARCONE <span className="text-zinc-500 font-normal"> S.</span> BRITO</span>
-        </div>
-        
-        <p className="text-sm text-zinc-500">
-          © {new Date().getFullYear()} Marcone S. de Brito. Todos os direitos reservados.
-        </p>
-        
-        <div className="flex gap-6 text-sm font-medium text-zinc-600">
-          <a href="#" className="hover:text-zinc-900">Privacidade</a>
-          <a href="#" className="hover:text-zinc-900">Termos</a>
-        </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 48 }}>
+        {[
+          { icon: <Mail size={22} />, label: "E-mail", value: "contato@marconebrito.dev", href: "mailto:contato@marconebrito.dev" },
+          { icon: <Github size={22} />, label: "GitHub", value: "github.com/marconebrito", href: "https://github.com" },
+          { icon: <Linkedin size={22} />, label: "LinkedIn", value: "linkedin.com/in/marconebrito", href: "https://linkedin.com" },
+        ].map(({ icon, label, value, href }) => (
+          <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+            style={{ display: "flex", alignItems: "center", gap: 16, padding: 24, borderRadius: 16, border: "1px solid #f4f4f5", background: "#fafafa", textDecoration: "none", color: "inherit", transition: "all 0.3s" }}
+            onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.08)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "none"; }}>
+            <div style={{ width: 48, height: 48, background: "#18181b", color: "#fff", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              {icon}
+            </div>
+            <div>
+              <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#a1a1aa", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>{label}</p>
+              <p style={{ fontSize: "0.95rem", fontWeight: 500, color: "#18181b" }}>{value}</p>
+            </div>
+          </a>
+        ))}
       </div>
-    </footer>
-  );
-};
 
+      <div style={{ textAlign: "center" }}>
+        <a href="https://wa.me/5538992182727?text=Olá,%20gostaria%20de%20conversar!" target="_blank" rel="noopener noreferrer"
+          style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#18181b", color: "#fff", padding: "1rem 2.5rem", borderRadius: 12, fontWeight: 600, textDecoration: "none", fontSize: "1rem" }}>
+          Falar pelo WhatsApp <ChevronRight size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+// ── Footer ─────────────────────────────────────────────────────────────────
+const Footer = () => (
+  <footer style={{ padding: "3rem 1.5rem", borderTop: "1px solid #f4f4f5", background: "#fff", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24, maxWidth: 1280, margin: "0 auto" }}>
+    <div style={{ fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ background: "#18181b", color: "#fff", padding: 4, borderRadius: 6 }}><Terminal size={16} /></div>
+      MARCONE <span style={{ color: "#71717a", fontWeight: 400, marginLeft: 4 }}>S.</span> BRITO
+    </div>
+    <p style={{ fontSize: "0.875rem", color: "#71717a" }}>© {new Date().getFullYear()} Marcone S. de Brito. Todos os direitos reservados.</p>
+    <div style={{ display: "flex", gap: 24 }}>
+      {["Privacidade", "Termos"].map(l => <a key={l} href="#" style={{ fontSize: "0.875rem", fontWeight: 500, color: "#52525b", textDecoration: "none" }}>{l}</a>)}
+    </div>
+  </footer>
+);
+
+// ── App ────────────────────────────────────────────────────────────────────
 export default function App() {
   return (
-    <div className="min-h-screen">
+    <div style={{ minHeight: "100vh", fontFamily: "system-ui, sans-serif" }}>
       <Nav />
       <Hero />
       <Services />
