@@ -1,4 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
+import informatica from "./assets/informatica.png";
+import office365 from "./assets/office365.png";
+import kaspersky from "./assets/kaspersky.png";
+import windows11 from "./assets/windows11.png";
 
 const MonitorIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>;
 const SmartphoneIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>;
@@ -16,7 +20,12 @@ const ChevronLeftIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="22"
 const ChevronRightLgIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>;
 const MenuIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>;
 const XIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
-import informatica from "./assets/informatica.png";
+
+// ── Ícones dos produtos de software ─────────────────────────────────────────
+const GridAppsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>;
+const ShieldIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9.5 12.5l1.8 1.8L15 10.5"/></svg>;
+const WindowAppIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><circle cx="6.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="9" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>;
+const BadgeCheckIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 2l2.2 1.3 2.5-.3 1.3 2.2 2.2 1.3-.3 2.5 1.3 2.2-1.3 2.2.3 2.5-2.2 1.3-1.3 2.2-2.5-.3L12 22l-2.2-1.3-2.5.3-1.3-2.2-2.2-1.3.3-2.5L2.8 12l1.3-2.2-.3-2.5 2.2-1.3 1.3-2.2 2.5.3z"/><path d="M9 12l2 2 4-4"/></svg>;
 
 // ── Nav ────────────────────────────────────────────────────────────────────
 const Nav = () => {
@@ -33,6 +42,7 @@ const Nav = () => {
     { name: "Início", href: "#home" },
     { name: "Sobre", href: "https://layout-novo-portfolio-marconesbs-projects.vercel.app/" },
     { name: "Serviços", href: "#services" },
+    { name: "Produtos", href: "#products" },
     { name: "Habilidades", href: "#skills" },
     { name: "Contato", href: "#contact" },
   ];
@@ -143,7 +153,7 @@ const Hero = () => (
               style={{ backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
             <div className="w-full h-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center relative z-20">
               <div className="text-center text-white/80 px-6">
-                <img src={informatica}></img>
+                <img src={informatica} alt="Informática" />
               </div>
             </div>
           </div>
@@ -190,6 +200,132 @@ const Services = () => {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+};
+
+// ── Products (licenças de software) ─────────────────────────────────────────
+// Edite os campos "price" com os valores reais que você pratica.
+// Os imports das imagens já estão prontos no topo do arquivo (office365, kaspersky,
+// windows11). Basta salvar os arquivos correspondentes em src/assets/. Se algum
+// arquivo não existir, troque o valor de "image" por "" para mostrar o espaço reservado.
+const PRODUCTS = [
+  {
+    icon: <GridAppsIcon />,
+    image: office365,
+    name: "Microsoft 365",
+    tagline: "Word, Excel, PowerPoint, Outlook e mais",
+    price: "Sob consulta",
+    features: [
+      "Licença original ativada em seu nome",
+      "Instalação e configuração inclusas",
+      "Compatível com Windows e Mac",
+    ],
+  },
+  {
+    icon: <ShieldIcon />,
+    image: kaspersky,
+    name: "Kaspersky",
+    tagline: "Antivírus e proteção completa contra ameaças",
+    price: "Sob consulta",
+    features: [
+      "Licença original de 1 a 5 dispositivos",
+      "Instalação, configuração e primeira varredura",
+      "Suporte para renovação anual",
+    ],
+  },
+  {
+    icon: <WindowAppIcon />,
+    image: windows11,
+    name: "Windows 11",
+    tagline: "Sistema operacional original, Home ou Pro",
+    price: "Sob consulta",
+    features: [
+      "Ativação original garantida",
+      "Instalação limpa com backup dos seus arquivos",
+      "Drivers e atualizações configurados",
+    ],
+  },
+];
+
+const Products = () => {
+  const waMessage = (name) => encodeURIComponent(`Olá, Marcone! Tenho interesse na licença de ${name}. Pode me passar mais informações?`);
+
+  return (
+    <section id="products" className="py-20 sm:py-24 bg-zinc-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-12 sm:mb-16">
+          <div>
+            <p className="text-xs font-bold text-zinc-400 tracking-widest uppercase mb-2">Licenciamento</p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Produtos e Licenças de Software</h2>
+            <p className="text-zinc-500 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
+              Venda de licenças originais com instalação inclusa. Sem pirataria, sem dor de cabeça:
+              você recebe o produto ativado e pronto para usar.
+            </p>
+          </div>
+          <span className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-semibold text-emerald-700">
+            <BadgeCheckIcon /> 100% Original
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {PRODUCTS.map((p, i) => (
+            <div key={i}
+              className="flex flex-col rounded-2xl border border-zinc-200 bg-white overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              {/* Espaço para a imagem do produto (capa/print/logo) */}
+              <div className="relative w-full aspect-[4/3] bg-zinc-100 border-b border-zinc-200 flex items-center justify-center overflow-hidden p-4">
+                {p.image ? (
+                  <img src={p.image} alt={p.name} className="max-w-full max-h-full w-auto h-auto object-contain" />
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-zinc-300">
+                    <div className="w-11 h-11 rounded-xl bg-white border border-dashed border-zinc-300 flex items-center justify-center text-zinc-400">
+                      {p.icon}
+                    </div>
+                    <span className="text-[11px] font-medium tracking-wide">Imagem do produto</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-1 flex-col p-6 sm:p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 bg-zinc-900 text-white rounded-xl flex items-center justify-center shrink-0">
+                  {p.icon}
+                </div>
+                <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wide border border-zinc-200 rounded-full px-2.5 py-1">
+                  Licença original
+                </span>
+              </div>
+
+              <h3 className="text-lg font-bold mb-1">{p.name}</h3>
+              <p className="text-zinc-500 text-sm mb-5 leading-relaxed">{p.tagline}</p>
+
+              <ul className="space-y-2.5 list-none p-0 m-0 mb-6 flex-1">
+                {p.features.map(f => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-zinc-600">
+                    <span className="mt-0.5 shrink-0"><CheckIcon /></span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex items-center justify-between mb-5 pt-5 border-t border-zinc-100">
+                <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wide">Valor</span>
+                <span className="text-base font-bold text-zinc-900">{p.price}</span>
+              </div>
+
+              <a href={`https://wa.me/5538992182727?text=${waMessage(p.name)}`} target="_blank" rel="noopener noreferrer"
+                className="w-full text-center bg-zinc-900 text-white px-5 py-3 rounded-xl font-semibold no-underline text-sm hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2">
+                Comprar e Instalar <ChevronRightIcon />
+              </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-xs text-zinc-400 mt-8 text-center sm:text-left">
+          Preços variam conforme o tipo de licença (assinatura ou vitalícia) e a quantidade de dispositivos. Fale comigo para um orçamento sem compromisso.
+        </p>
       </div>
     </section>
   );
@@ -372,7 +508,7 @@ const Contact = () => {
 
         <div className="text-center">
           <a href="https://wa.me/5538992182727" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-zinc-900 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-semibold no-underline text-sm sm:text-base hover:bg-zinc-700 transition-colors">
+            className="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-semibold no-underline text-sm sm:text-base hover:bg-emerald-700 transition-colors">
             Falar pelo WhatsApp <ChevronRightIcon />
           </a>
         </div>
@@ -409,6 +545,7 @@ export default function App() {
       <main>
         <Hero />
         <Services />
+        <Products />
         <Skills />
         <ImageCarousel />
         <Contact />
