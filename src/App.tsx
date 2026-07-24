@@ -185,6 +185,7 @@ const MAINTENANCE_PHOTOS = [
 
 const MaintenanceCarousel = () => {
   const [current, setCurrent] = useState(0);
+  const [isHovered, setIsHovered] = useState(false); // pausa no hover
   const total = MAINTENANCE_PHOTOS.length;
 
   const handlePrev = (e: React.MouseEvent) => {
@@ -192,24 +193,36 @@ const MaintenanceCarousel = () => {
     setCurrent((c) => (c - 1 + total) % total);
   };
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleNext = useCallback(() => {
     setCurrent((c) => (c + 1) % total);
-  };
+  }, [total]);
 
   const handleDot = (e: React.MouseEvent, i: number) => {
     e.stopPropagation();
     setCurrent(i);
   };
 
+  // ⬇️ AUTO-PLAY: troca a imagem a cada 3 segundos
+  useEffect(() => {
+    if (isHovered) return; // pausa enquanto o mouse estiver em cima
+    const id = setInterval(handleNext, 3000);
+    return () => clearInterval(id);
+  }, [handleNext, isHovered]);
+
   return (
-    <div className="mt-5" onClick={(e) => e.stopPropagation()}>
-      <div className="relative w-full h-48 sm:h-64 rounded-xl overflow-hidden bg-zinc-200">
+    <div 
+      className="mt-5" 
+      onClick={(e) => e.stopPropagation()}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative w-full h-56 sm:h-86 rounded-xl overflow-hidden bg-zinc-200">
         <img
           src={MAINTENANCE_PHOTOS[current].src}
           alt={MAINTENANCE_PHOTOS[current].alt}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-opacity duration-500"
         />
+        {/* ... botões e dots permanecem iguais ... */}
         <button
           onClick={handlePrev}
           className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-white/85 hover:bg-white shadow text-zinc-700 text-sm border-none cursor-pointer"
