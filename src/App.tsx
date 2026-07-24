@@ -3,6 +3,9 @@ import informatica from "./assets/informatica.png";
 import office365 from "./assets/office365.png";
 import kaspersky from "./assets/kaspersky.png";
 import windows11 from "./assets/windows11.png";
+import img01 from "./assets/img-01.jpeg";
+import img02 from "./assets/img-02.jpeg";
+import img03 from "./assets/img-03.jpeg";
 
 const MonitorIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>;
 const SmartphoneIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>;
@@ -167,11 +170,18 @@ const Hero = () => (
 
 // ── Mini carrossel de fotos (usado dentro do card de Suporte Técnico) ──────
 // Troque as URLs abaixo pelas fotos reais dos seus trabalhos de manutenção.
+//const MAINTENANCE_PHOTOS = [
+ // { src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80", alt: "Manutenção de computador" },
+ // { src: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600&q=80", alt: "Montagem de hardware" },
+ // { src: "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=600&q=80", alt: "Formatação de notebook" },
+//];
+
 const MAINTENANCE_PHOTOS = [
-  { src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80", alt: "Manutenção de computador" },
-  { src: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600&q=80", alt: "Montagem de hardware" },
-  { src: "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=600&q=80", alt: "Formatação de notebook" },
+  { src: img03, alt: "Manutenção de computador" },
+  { src: img02, alt: "Montagem de hardware" },
+  { src: img01, alt: "Formatação de notebook" },
 ];
+
 
 const MaintenanceCarousel = () => {
   const [current, setCurrent] = useState(0);
@@ -194,7 +204,7 @@ const MaintenanceCarousel = () => {
 
   return (
     <div className="mt-5" onClick={(e) => e.stopPropagation()}>
-      <div className="relative w-full h-36 sm:h-40 rounded-xl overflow-hidden bg-zinc-200">
+      <div className="relative w-full h-48 sm:h-64 rounded-xl overflow-hidden bg-zinc-200">
         <img
           src={MAINTENANCE_PHOTOS[current].src}
           alt={MAINTENANCE_PHOTOS[current].alt}
