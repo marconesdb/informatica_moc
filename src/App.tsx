@@ -165,18 +165,97 @@ const Hero = () => (
   </section>
 );
 
+// ── Mini carrossel de fotos (usado dentro do card de Suporte Técnico) ──────
+// Troque as URLs abaixo pelas fotos reais dos seus trabalhos de manutenção.
+const MAINTENANCE_PHOTOS = [
+  { src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80", alt: "Manutenção de computador" },
+  { src: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600&q=80", alt: "Montagem de hardware" },
+  { src: "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=600&q=80", alt: "Formatação de notebook" },
+];
+
+const MaintenanceCarousel = () => {
+  const [current, setCurrent] = useState(0);
+  const total = MAINTENANCE_PHOTOS.length;
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrent((c) => (c - 1 + total) % total);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrent((c) => (c + 1) % total);
+  };
+
+  const handleDot = (e: React.MouseEvent, i: number) => {
+    e.stopPropagation();
+    setCurrent(i);
+  };
+
+  return (
+    <div className="mt-5" onClick={(e) => e.stopPropagation()}>
+      <div className="relative w-full h-36 sm:h-40 rounded-xl overflow-hidden bg-zinc-200">
+        <img
+          src={MAINTENANCE_PHOTOS[current].src}
+          alt={MAINTENANCE_PHOTOS[current].alt}
+          className="w-full h-full object-cover"
+        />
+        <button
+          onClick={handlePrev}
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-white/85 hover:bg-white shadow text-zinc-700 text-sm border-none cursor-pointer"
+          aria-label="Foto anterior"
+        >
+          &lt;
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-white/85 hover:bg-white shadow text-zinc-700 text-sm border-none cursor-pointer"
+          aria-label="Próxima foto"
+        >
+          &gt;
+        </button>
+      </div>
+      <div className="flex justify-center gap-1.5 mt-3">
+        {MAINTENANCE_PHOTOS.map((_, i) => {
+          const dotClass = i === current
+            ? "h-1.5 rounded-full border-none cursor-pointer transition-all bg-zinc-800 w-4"
+            : "h-1.5 rounded-full border-none cursor-pointer transition-all bg-zinc-300 w-1.5";
+          return (
+            <button
+              key={i}
+              onClick={(e) => handleDot(e, i)}
+              className={dotClass}
+              aria-label={`Ir para foto ${i + 1}`}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 // ── Services ───────────────────────────────────────────────────────────────
+type ServiceItem = {
+  icon: JSX.Element;
+  title: string;
+  description: string;
+  link?: { href: string; label: string };
+  carousel?: boolean;
+};
+
 const Services = () => {
-  const services = [
+  const services: ServiceItem[] = [
     {
       icon: <LayoutIcon />,
       title: "Desenvolvimento Front-end",
       description: "Criação de interfaces responsivas, rápidas e acessíveis utilizando React.js e Tailwind CSS.",
+      link: { href: "https://layout-novo-portfolio-marconesbs-projects.vercel.app/", label: "Ver projetos" },
     },
     {
       icon: <WrenchIcon />,
       title: "Suporte Técnico TI",
       description: "Manutenção de hardware, configuração e formatação de computadores.",
+      carousel: true,
     },
   ];
 
@@ -189,16 +268,38 @@ const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-          {services.map((s, i) => (
-            <div key={i}
-              className="p-6 sm:p-8 rounded-2xl border border-zinc-100 bg-zinc-50 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-6 text-zinc-800">
-                {s.icon}
+          {services.map((s, i) => {
+            let linkEl = null;
+if (s.link) {
+  linkEl = (
+    <a
+      href={s.link.href}
+      className="inline-block mt-4 text-sm font-semibold text-zinc-800 hover:text-zinc-500 underline underline-offset-4"
+    >
+      {s.link.label}
+    </a>
+  );
+}     
+            let carouselEl = null;
+            if (s.carousel) {
+              carouselEl = <MaintenanceCarousel />;
+            }
+
+            return (
+              <div
+                key={i}
+                className="p-6 sm:p-8 rounded-2xl border border-zinc-100 bg-zinc-50 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default"
+              >
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-6 text-zinc-800">
+                  {s.icon}
+                </div>
+                <h3 className="text-lg font-bold mb-3">{s.title}</h3>
+                <p className="text-zinc-500 leading-relaxed text-sm sm:text-base">{s.description}</p>
+                {linkEl}
+                {carouselEl}
               </div>
-              <h3 className="text-lg font-bold mb-3">{s.title}</h3>
-              <p className="text-zinc-500 leading-relaxed text-sm sm:text-base">{s.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -206,10 +307,6 @@ const Services = () => {
 };
 
 // ── Products (licenças de software) ─────────────────────────────────────────
-// Edite os campos "price" com os valores reais que você pratica.
-// Os imports das imagens já estão prontos no topo do arquivo (office365, kaspersky,
-// windows11). Basta salvar os arquivos correspondentes em src/assets/. Se algum
-// arquivo não existir, troque o valor de "image" por "" para mostrar o espaço reservado.
 const PRODUCTS = [
   {
     icon: <GridAppsIcon />,
@@ -250,7 +347,8 @@ const PRODUCTS = [
 ];
 
 const Products = () => {
-  const waMessage = (name) => encodeURIComponent(`Olá, Marcone! Tenho interesse na licença de ${name}. Pode me passar mais informações?`);
+  const waMessage = (name: string) =>
+    encodeURIComponent(`Olá, Marcone! Tenho interesse na licença de ${name}. Pode me passar mais informações?`);
 
   return (
     <section id="products" className="py-20 sm:py-24 bg-zinc-50">
@@ -273,7 +371,6 @@ const Products = () => {
           {PRODUCTS.map((p, i) => (
             <div key={i}
               className="flex flex-col rounded-2xl border border-zinc-200 bg-white overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              {/* Espaço para a imagem do produto (capa/print/logo) */}
               <div className="relative w-full aspect-[4/3] bg-zinc-100 border-b border-zinc-200 flex items-center justify-center overflow-hidden p-4">
                 {p.image ? (
                   <img src={p.image} alt={p.name} className="max-w-full max-h-full w-auto h-auto object-contain" />
@@ -428,7 +525,6 @@ const ImageCarousel = () => {
             </div>
           ))}
 
-          {/* Controls */}
           <button onClick={prev}
             className="absolute top-1/2 left-3 sm:left-4 -translate-y-1/2 bg-white/20 backdrop-blur-sm border border-white/30 text-white w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/35 transition-colors z-10">
             <ChevronLeftIcon />
@@ -438,12 +534,10 @@ const ImageCarousel = () => {
             <ChevronRightLgIcon />
           </button>
 
-          {/* Counter */}
           <div className="absolute top-3 right-4 sm:top-4 sm:right-5 bg-black/40 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full z-10">
             {current + 1} / {total}
           </div>
 
-          {/* Dots */}
           <div className="absolute bottom-4 sm:bottom-5 right-5 sm:right-6 flex gap-2 z-10">
             {SLIDES.map((_, i) => (
               <button key={i} onClick={() => setCurrent(i)}
@@ -451,7 +545,6 @@ const ImageCarousel = () => {
             ))}
           </div>
 
-          {/* Progress bar */}
           <div className="absolute bottom-0 left-0 h-0.5 bg-white z-10 transition-all duration-400 ease-in-out"
             style={{ width: `${((current + 1) / total) * 100}%` }} />
         </div>
