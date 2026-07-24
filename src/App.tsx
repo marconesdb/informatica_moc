@@ -258,11 +258,12 @@ const MaintenanceCarousel = () => {
 };
 
 // ── Services ───────────────────────────────────────────────────────────────
+// ── Services ───────────────────────────────────────────────────────────────
 type ServiceItem = {
   icon: JSX.Element;
   title: string;
   description: string;
-  link?: { href: string; label: string };
+  link?: { href: string; label: string; className?: string };
   carousel?: boolean;
 };
 
@@ -272,7 +273,11 @@ const Services = () => {
       icon: <LayoutIcon />,
       title: "Desenvolvimento Front-end",
       description: "Criação de interfaces responsivas, rápidas e acessíveis utilizando React.js e Tailwind CSS.",
-      link: { href: "https://layout-novo-portfolio-marconesbs-projects.vercel.app/", label: "Ver projetos" },
+      link: {
+        href: "https://layout-novo-portfolio-marconesbs-projects.vercel.app/",
+        label: "Ver projetos",
+        className: "text-lg font-bold text-emerald-700 hover:text-emerald-800",
+      },
     },
     {
       icon: <WrenchIcon />,
@@ -293,16 +298,18 @@ const Services = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {services.map((s, i) => {
             let linkEl = null;
-if (s.link) {
-  linkEl = (
-    <a
-      href={s.link.href}
-      className="inline-block mt-4 text-sm font-semibold text-zinc-800 hover:text-zinc-500 underline underline-offset-4"
-    >
-      {s.link.label}
-    </a>
-  );
-}     
+            if (s.link) {
+              linkEl = (
+                <a
+                  href={s.link.href}
+                  className={`inline-block mt-4 underline underline-offset-4 transition-colors ${
+                    s.link.className || "text-sm font-semibold text-zinc-800 hover:text-zinc-500"
+                  }`}
+                >
+                  {s.link.label}
+                </a>
+              );
+            }
             let carouselEl = null;
             if (s.carousel) {
               carouselEl = <MaintenanceCarousel />;
