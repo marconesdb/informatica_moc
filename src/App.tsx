@@ -170,18 +170,11 @@ const Hero = () => (
 
 // ── Mini carrossel de fotos (usado dentro do card de Suporte Técnico) ──────
 // Troque as URLs abaixo pelas fotos reais dos seus trabalhos de manutenção.
-//const MAINTENANCE_PHOTOS = [
- // { src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80", alt: "Manutenção de computador" },
- // { src: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600&q=80", alt: "Montagem de hardware" },
- // { src: "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=600&q=80", alt: "Formatação de notebook" },
-//];
-
 const MAINTENANCE_PHOTOS = [
   { src: img03, alt: "Manutenção de computador" },
   { src: img02, alt: "Montagem de hardware" },
   { src: img01, alt: "Formatação de notebook" },
 ];
-
 
 const MaintenanceCarousel = () => {
   const [current, setCurrent] = useState(0);
@@ -210,8 +203,8 @@ const MaintenanceCarousel = () => {
   }, [handleNext, isHovered]);
 
   return (
-    <div 
-      className="mt-5" 
+    <div
+      className="mt-5"
       onClick={(e) => e.stopPropagation()}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -222,7 +215,6 @@ const MaintenanceCarousel = () => {
           alt={MAINTENANCE_PHOTOS[current].alt}
           className="w-full h-full object-cover transition-opacity duration-500"
         />
-        {/* ... botões e dots permanecem iguais ... */}
         <button
           onClick={handlePrev}
           className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-white/85 hover:bg-white shadow text-zinc-700 text-sm border-none cursor-pointer"
@@ -258,13 +250,13 @@ const MaintenanceCarousel = () => {
 };
 
 // ── Services ───────────────────────────────────────────────────────────────
-// ── Services ───────────────────────────────────────────────────────────────
 type ServiceItem = {
   icon: JSX.Element;
   title: string;
   description: string;
   link?: { href: string; label: string; className?: string };
   carousel?: boolean;
+  features?: string[]; // NOVO: bullets de destaque, ex.: usados no card de Front-end
 };
 
 const Services = () => {
@@ -272,11 +264,17 @@ const Services = () => {
     {
       icon: <LayoutIcon />,
       title: "Desenvolvimento Front-end",
-      description: "Criação de interfaces responsivas, rápidas e acessíveis utilizando React.js e Tailwind CSS.",
+      description:
+        "Landing pages, dashboards e sistemas web sob medida, com interfaces responsivas e rápidas.",
+      features: [
+        "React.js + TypeScript",
+        "Tailwind CSS / Design responsivo",
+        "Deploy e domínio inclusos",
+      ],
       link: {
         href: "https://layout-novo-portfolio-marconesbs-projects.vercel.app/",
         label: "Ver projetos",
-        className: "text-lg font-bold text-emerald-700 hover:text-emerald-800",
+        className: "text-sm font-semibold text-emerald-700 hover:text-emerald-800",
       },
     },
     {
@@ -297,19 +295,36 @@ const Services = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {services.map((s, i) => {
+            let featuresEl = null;
+            if (s.features && s.features.length > 0) {
+              featuresEl = (
+                <ul className="space-y-2 list-none p-0 m-0 mt-4">
+                  {s.features.map(f => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-zinc-600">
+                      <span className="shrink-0"><CheckIcon /></span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              );
+            }
+
             let linkEl = null;
             if (s.link) {
               linkEl = (
                 <a
                   href={s.link.href}
-                  className={`inline-block mt-4 underline underline-offset-4 transition-colors ${
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1 mt-5 underline underline-offset-4 transition-colors ${
                     s.link.className || "text-sm font-semibold text-zinc-800 hover:text-zinc-500"
                   }`}
                 >
-                  {s.link.label}
+                  {s.link.label} <ChevronRightIcon />
                 </a>
               );
             }
+
             let carouselEl = null;
             if (s.carousel) {
               carouselEl = <MaintenanceCarousel />;
@@ -325,6 +340,7 @@ const Services = () => {
                 </div>
                 <h3 className="text-lg font-bold mb-3">{s.title}</h3>
                 <p className="text-zinc-500 leading-relaxed text-sm sm:text-base">{s.description}</p>
+                {featuresEl}
                 {linkEl}
                 {carouselEl}
               </div>
