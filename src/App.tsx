@@ -57,7 +57,7 @@ const Nav = () => {
           <div className="bg-zinc-900 text-white p-1 rounded-md">
             <TerminalIcon />
           </div>
-          <span>MARCONE <span className="text-zinc-400 font-normal">S.</span> BRITO</span>
+          <span>M<span className="text-zinc-400 font-normal">S.</span> B</span>
         </a>
 
         {/* Desktop */}
@@ -124,9 +124,7 @@ const Hero = () => (
         </h1>
 
         <p className="text-base sm:text-lg text-zinc-500 mb-8 max-w-xl leading-relaxed">
-          Olá, eu sou <strong className="text-zinc-900">Marcone S. de Brito</strong>. Especialista em criar interfaces modernas,
-          sistemas eficientes e soluções técnicas completas para o seu negócio.
-        </p>
+          Olá, sou Técnico em Informática e Especialista em Tecnologia e Desenvolvimento de Sistemas<strong className="text-zinc-900"></strong> com foco em criar interfaces modernas, sistemas eficientes e soluções completas para impulsionar negócios. Transformo ideias em ferramentas digitais práticas e inovadoras, sempre com atenção à performance e à experiência do usuário.</p>
 
         <div className="flex flex-wrap gap-4">
           <a href="https://wa.me/5538992182727" target="_blank" rel="noopener noreferrer"
@@ -661,11 +659,10 @@ const Footer = () => (
   <footer className="py-8 sm:py-10 border-t border-zinc-200 bg-zinc-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 text-center sm:text-left">
       <a href="#home" className="text-sm font-bold flex items-center gap-2 no-underline text-zinc-900">
-        <div className="bg-zinc-900 text-zinc-400 p-1 rounded-md"><TerminalIcon /></div>
-        MARCONE <span className="text-zinc-500 font-normal ml-1">S.</span> BRITO
+        <div className="bg-zinc-900 text-zinc-400 p-1 rounded-md"><TerminalIcon /></div><span>M<span className="text-zinc-400 font-normal">S.</span> B</span>
       </a>
       <p className="text-sm text-zinc-400 order-last sm:order-none">
-        © {new Date().getFullYear()} Marcone S. de Brito. Todos os direitos reservados.
+        © {new Date().getFullYear()} MSB. Todos os direitos reservados.
       </p>
       <nav className="flex gap-5">
         {["Privacidade", "Termos"].map(l => (
