@@ -402,7 +402,7 @@ const Products = () => {
             <p className="text-xs font-bold text-zinc-400 tracking-widest uppercase mb-2">Licenciamento</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Produtos e Licenças de Software</h2>
             <p className="text-zinc-500 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
-              Venda de licenças originais com instalação inclusa. Sem pirataria, sem dor de cabeça:
+              Venda de licenças originais com instalação inclusaa. Sem pirataria, sem dor de cabeça:
               você recebe o produto ativado e pronto para usar.
             </p>
           </div>
