@@ -128,7 +128,7 @@ const Hero = () => (
 
         <div className="flex flex-wrap gap-4">
           <a href="https://wa.me/5538992182727" target="_blank" rel="noopener noreferrer"
-            className="bg-zinc-900 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold no-underline flex items-center gap-2 hover:bg-zinc-700 transition-colors text-sm sm:text-base">
+            className="bg-emerald-500 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold no-underline flex items-center gap-2 hover:bg-emerald-600 transition-colors text-sm sm:text-base">
             Vamos Conversar <ChevronRightIcon />
           </a>
           <a href="#services"
